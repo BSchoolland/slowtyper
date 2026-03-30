@@ -3,7 +3,7 @@
 SlowTyper - A cross-platform tool that adds a keybind to type clipboard
 contents naturally instead of pasting them instantly.
 
-Keybind: Ctrl+Shift+B (Linux) / Cmd+Shift+B (Mac)
+Keybind: Ctrl+Shift+M (Linux) / Cmd+Shift+M (Mac)
 
 Requirements: pip install pynput pyperclip
 """
@@ -157,11 +157,11 @@ def normalize_key(key):
 
 def main():
     if IS_MAC:
-        trigger = {Key.cmd, Key.shift, keyboard.KeyCode.from_char("b")}
-        combo_name = "Cmd+Shift+B"
+        trigger = {Key.cmd, Key.shift, keyboard.KeyCode.from_char("m")}
+        combo_name = "Cmd+Shift+M"
     else:
-        trigger = {Key.ctrl, Key.shift, keyboard.KeyCode.from_char("b")}
-        combo_name = "Ctrl+Shift+B"
+        trigger = {Key.ctrl, Key.shift, keyboard.KeyCode.from_char("m")}
+        combo_name = "Ctrl+Shift+M"
 
     current_keys = set()
 
