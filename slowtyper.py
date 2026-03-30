@@ -138,8 +138,13 @@ def normalize_key(key):
         return Key.ctrl
     if IS_MAC and key in (Key.cmd_l, Key.cmd_r, Key.cmd):
         return Key.cmd
-    if isinstance(key, keyboard.KeyCode) and key.char:
-        return keyboard.KeyCode.from_char(key.char.lower())
+    if isinstance(key, keyboard.KeyCode):
+        # When Ctrl is held, key.char becomes a control character (e.g. \x02
+        # for Ctrl+B). Fall back to vk (virtual key code) to get the real key.
+        if key.vk is not None and 65 <= key.vk <= 90:
+            return keyboard.KeyCode.from_char(chr(key.vk + 32))
+        if key.char:
+            return keyboard.KeyCode.from_char(key.char.lower())
     return key
 
 
