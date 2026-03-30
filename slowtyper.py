@@ -66,14 +66,21 @@ def char_delay(char, prev_char):
     return delay
 
 
-def type_naturally(text):
+MODIFIER_KEYS = {Key.shift, Key.ctrl, Key.cmd} if IS_MAC else {Key.shift, Key.ctrl}
+
+
+def type_naturally(text, current_keys):
     global is_typing
     if is_typing:
         return
     is_typing = True
 
-    # Wait for user to release the hotkey so modifiers don't interfere
-    time.sleep(0.4)
+    # Wait for modifier keys to actually be released
+    deadline = time.monotonic() + 3
+    while any(k in current_keys for k in MODIFIER_KEYS):
+        if time.monotonic() > deadline:
+            break
+        time.sleep(0.05)
 
     try:
         i = 0
@@ -114,7 +121,7 @@ def type_naturally(text):
         is_typing = False
 
 
-def on_activate():
+def on_activate(current_keys):
     global is_typing
     if is_typing:
         print("[SlowTyper] Typing interrupted.")
@@ -127,7 +134,7 @@ def on_activate():
         return
 
     print(f"[SlowTyper] Typing {len(text)} chars...")
-    threading.Thread(target=type_naturally, args=(text,), daemon=True).start()
+    threading.Thread(target=type_naturally, args=(text, current_keys), daemon=True).start()
 
 
 def normalize_key(key):
@@ -162,7 +169,7 @@ def main():
         nk = normalize_key(key)
         current_keys.add(nk)
         if trigger.issubset(current_keys):
-            on_activate()
+            on_activate(current_keys)
 
     def on_release(key):
         nk = normalize_key(key)
