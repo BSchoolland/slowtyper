@@ -21,25 +21,25 @@ typer = Controller()
 is_typing = False
 
 # Timing config (seconds)
-BASE_DELAY = 0.07  # Center of normal typing speed
+BASE_DELAY = 0.035  # Center of normal typing speed
 FAST_KEYS = set("etaoinsrhld ")  # Common letters typed fastest
 SLOW_KEYS = set("zqxjkvbp{}[]()!@#$%^&*")  # Uncommon chars typed slower
 
 # Burst typing: humans type familiar sequences quickly then pause
 BURST_MIN = 2
 BURST_MAX = 7
-BURST_PAUSE_MIN = 0.08
-BURST_PAUSE_MAX = 0.25
+BURST_PAUSE_MIN = 0.04
+BURST_PAUSE_MAX = 0.125
 
 # Thinking pauses at sentence boundaries
 SENTENCE_ENDS = set(".!?")
-THINK_PAUSE_MIN = 0.2
-THINK_PAUSE_MAX = 0.6
+THINK_PAUSE_MIN = 0.1
+THINK_PAUSE_MAX = 0.3
 
 # Micro-hesitations (brief unexpected pauses mid-word)
 HESITATION_CHANCE = 0.03
-HESITATION_MIN = 0.1
-HESITATION_MAX = 0.3
+HESITATION_MIN = 0.05
+HESITATION_MAX = 0.15
 
 IS_MAC = platform.system() == "Darwin"
 
